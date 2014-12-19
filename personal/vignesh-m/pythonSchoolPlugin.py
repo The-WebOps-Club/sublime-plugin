@@ -5,11 +5,13 @@ class PythonSchoolCommand(sublime_plugin.WindowCommand):
 		path='/Users/vigneshm/Desktop/st_plugin/1.py'
 		self.open(path)
 		view_curr=self.window.active_view()
+		print (view_curr.file_name())
 		view_curr.run_command('save')
-		print view_curr.file_name
-		insert_edit=view_curr.begin_edit()
-		view_curr.insert(insert_edit,0,"# Try typing print('Hello World')\n")
-		view_curr.end_edit(insert_edit)
+		print (view_curr.file_name())
+		view_curr.run_command('insert_text',{'pos':0,'text':'Hello\n'})
+		#insert_edit=view_curr.begin_edit()
+		#view_curr.insert(insert_edit,0,"# Try typing print('Hello World')\n")
+		#view_curr.end_edit(insert_edit)
 
 	def open(self, file):
 		sublime.status_message("Trying to open " + file)
@@ -24,7 +26,13 @@ class PythonSchoolCommand(sublime_plugin.WindowCommand):
 			sublime.status_message("Cannot find file! " +  file)
 			if sublime.ok_cancel_dialog("Create file? " + file):
 				self.create(file)
-				self.window.open_file(file)
+				if(os.path.exists(file)):
+					self.window.open_file(file)
+				else :
+					self.window.open_file(file)
+					self.window.run_command('prompt_save_as')
+					print ("doesnt exist")
+					self.window.open_file(file)
 
 	def create(self, filename):
 		base, filename = os.path.split(filename)
@@ -42,4 +50,9 @@ class CheckOutputCommand(sublime_plugin.TextCommand):
 		fname=self.view.file_name();
 		proc = subprocess.Popen(['python', fname], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 		output= proc.communicate()[0]
-		print output
+		print (output)
+
+class InsertTextCommand(sublime_plugin.TextCommand):
+    def run(self, edit, pos, text):
+        self.view.insert(edit, pos, text)
+        print ("printing "+text)
