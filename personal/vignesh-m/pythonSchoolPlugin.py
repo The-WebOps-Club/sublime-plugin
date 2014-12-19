@@ -1,7 +1,6 @@
-import sublime, sublimeplugin
+import sublime, sublime_plugin
 
-class pythonSchoolCommand:
-	def run(self,view,args):
-		Window curr=view.window()
-		View newf=curr.newfile()
-		newf.insert(0,"Text")
+class PythonschCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		new_view=self.view.window().new_file()
+		new_view.insert(edit,0,"Text")
