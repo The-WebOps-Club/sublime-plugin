@@ -1,38 +1,10 @@
-import sublime, sublime_plugin ,os ,subprocess
+import sublime, sublime_plugin ,os ,subprocess ,re
 from time import sleep
 class PythonSchoolCommand(sublime_plugin.WindowCommand):
 	def run(self):
 		path='/Users/vigneshm/Desktop/st_plugin/1.py'
-		self.open(path)
-		view_curr=self.window.active_view()
-		print (view_curr.file_name())
-		view_curr.run_command('save')
-		print (view_curr.file_name())
-		view_curr.run_command('insert_text',{'pos':0,'text':'Hello\n'})
-		#insert_edit=view_curr.begin_edit()
-		#view_curr.insert(insert_edit,0,"# Try typing print('Hello World')\n")
-		#view_curr.end_edit(insert_edit)
-
-	def open(self, file):
-		sublime.status_message("Trying to open " + file)
-		if file == "":
-			sublime.status_message("Not a valid file")
-			return
-		if os.path.exists(file):
-			sublime.status_message("File exists " + file)
-			self.window.open_file(file)
-			sublime.status_message("Opening " + file)
-		else:
-			sublime.status_message("Cannot find file! " +  file)
-			if sublime.ok_cancel_dialog("Create file? " + file):
-				self.create(file)
-				if(os.path.exists(file)):
-					self.window.open_file(file)
-				else :
-					self.window.open_file(file)
-					self.window.run_command('prompt_save_as')
-					print ("doesnt exist")
-					self.window.open_file(file)
+		self.create(path)
+		self.window.active_view().run_command('open_file_insert',{'path':path,'text':'Hello\n'})
 
 	def create(self, filename):
 		base, filename = os.path.split(filename)
@@ -52,7 +24,15 @@ class CheckOutputCommand(sublime_plugin.TextCommand):
 		output= proc.communicate()[0]
 		print (output)
 
-class InsertTextCommand(sublime_plugin.TextCommand):
-    def run(self, edit, pos, text):
-        self.view.insert(edit, pos, text)
-        print ("printing "+text)
+class OpenFileInsertCommand(sublime_plugin.TextCommand):
+    def run(self,edit,path,text):
+        window = self.view.window()
+        #path='/Users/vigneshm/Desktop/st_plugin/1.py'
+        view = window.open_file(path)
+        sublime.set_timeout(lambda: self.select_text(view,edit,text), 10)
+    def select_text(self, view,edit,text):
+        if not view.is_loading():
+            view.insert(edit,0,text)
+        else:
+            sublime.set_timeout(lambda: self.select_text(view,edit), 10)
+
