@@ -32,7 +32,10 @@ class OpenFileInsertCommand(sublime_plugin.TextCommand):
         sublime.set_timeout(lambda: self.select_text(view,edit,text), 10)
     def select_text(self, view,edit,text):
         if not view.is_loading():
-            view.insert(edit,0,text)
+            view.run_command('insert_text',{'pos':0,'text':text})
         else:
             sublime.set_timeout(lambda: self.select_text(view,edit), 10)
 
+class InsertTextCommand(sublime_plugin.TextCommand):
+	def run(self,edit,pos,text):
+		self.view.insert(edit,pos,text)
