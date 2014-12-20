@@ -5,6 +5,8 @@ class PythonSchoolCommand(sublime_plugin.WindowCommand):
 		path=sublime.packages_path()+"datapythonschool/1.py"
 		self.create(path)
 		self.window.active_view().run_command('open_file_insert',{'path':path,'text':'Hello\n'})
+		view_curr=self.window.active_view()
+		view_curr.run_command('save')
 
 	def create(self, filename):
 		base, filename = os.path.split(filename)
