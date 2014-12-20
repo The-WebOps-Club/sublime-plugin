@@ -2,7 +2,7 @@ import sublime, sublime_plugin ,os ,subprocess ,re
 from time import sleep
 class PythonSchoolCommand(sublime_plugin.WindowCommand):
 	def run(self):
-		path='/Users/vigneshm/Desktop/st_plugin/1.py'
+		path=sublime.packages_path()+"datapythonschool/1.py"
 		self.create(path)
 		self.window.active_view().run_command('open_file_insert',{'path':path,'text':'Hello\n'})
 
