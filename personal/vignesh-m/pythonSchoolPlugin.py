@@ -17,26 +17,37 @@ class PythonSchoolCommand(sublime_plugin.WindowCommand):
 			parent = os.path.split(base)[0]
 			if not os.path.exists(parent):
 				self.create_folder(parent)
-			os.mkdir(base)
+			try :
+				os.mkdir(base)
+			except :
+				print ('Error while opening file');
 
 class CheckOutputCommand(sublime_plugin.TextCommand):
 	def run(self,edit):
 		fname=self.view.file_name();
 		proc = subprocess.Popen(['python', fname], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 		output= proc.communicate()[0]
+		new_view=self.view.window().new_file()
+		new_view.run_command('goto_line',{'line':1});
+		pos=new_view.sel()[0].begin();
+		new_view.insert(edit,pos,"Your Output:\n\n"+output);
 		print (output)
 
 class OpenFileInsertCommand(sublime_plugin.TextCommand):
     def run(self,edit,path,text):
         window = self.view.window()
-        #path='/Users/vigneshm/Desktop/st_plugin/1.py'
-        view = window.open_file(path)
+        if(os.path.exists(path)):
+        	view = window.open_file(path)
+        else :
+        	print('Creating ...')
+        	view = window.open_file(path)
         sublime.set_timeout(lambda: self.select_text(view,edit,text), 10)
+
     def select_text(self, view,edit,text):
         if not view.is_loading():
             view.run_command('insert_text',{'pos':0,'text':text})
         else:
-            sublime.set_timeout(lambda: self.select_text(view,edit), 10)
+            sublime.set_timeout(lambda: self.insert_text(view,edit), 10)
 
 class InsertTextCommand(sublime_plugin.TextCommand):
 	def run(self,edit,pos,text):
