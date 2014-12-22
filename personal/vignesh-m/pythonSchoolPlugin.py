@@ -1,4 +1,4 @@
-import sublime, sublime_plugin ,os ,subprocess ,re ,sys ,StringIO
+import sublime, sublime_plugin ,os ,subprocess ,re ,sys ,io
 from time import sleep
 class PythonSchoolCommand(sublime_plugin.WindowCommand):
 	def run(self):
@@ -43,9 +43,9 @@ class CheckOutputCommand(sublime_plugin.TextCommand):
 		solnfile=open(solnfname,'r')
 		view=self.view
 		view.run_command('move_to',{'to':'eof'})
-		view.insert(edit,view.sel()[0].begin(),"\n\n#----\tYour Output:\t---#\n\n"+(output.decode('utf-8')));
-		view.insert(edit,view.sel()[0].begin(),"\n\n#----\tExpected Output:\t---#\n\n"+(output2.decode('utf-8')));
-		view.insert(edit,view.sel()[0].begin(),"\n\n#----\tModel Solution:\t---#\n\n"+solnfile.read());
+		view.insert(edit,view.sel()[0].begin(),"\n#----\tYour Output:\t---#\n\n"+(output.decode('utf-8'))+"\n\n#----\tYour Output End\t---#\n");
+		view.insert(edit,view.sel()[0].begin(),"\n#----\tExpected Output:\t---#\n\n"+(output2.decode('utf-8'))+"\n\n#----\tExpected Output End\t---#\n");
+		view.insert(edit,view.sel()[0].begin(),"\n#----\tModel Solution:\t---#\n\n"+solnfile.read()+"\n\n#----\tModel Solution End\t---#\n");
 		print (output)
 
 class InsertTextCommand(sublime_plugin.TextCommand):
