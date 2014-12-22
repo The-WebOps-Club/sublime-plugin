@@ -6,6 +6,8 @@ class PythonSchoolCommand(sublime_plugin.TextCommand):
 		path=sublime.packages_path()+"/PythonSchool/datapythonschool/"+num
 		self.create(path)
 		view_curr=self.view.window().open_file(path)
+		if(view_curr.is_loading()):
+			sublime.set_timeout(lambda:self.run(edit,num),10)
 		view_curr.run_command('erase_all');
 		view_curr.run_command('insert_text',{'pos':0,'text':"# Write a program to print Hello to stdout\n"})
 		view_curr.run_command('save')
