@@ -4,7 +4,7 @@ class PythonSchoolCommand(sublime_plugin.WindowCommand):
 	def run(self):
 		path=sublime.packages_path()+"datapythonschool/1.py"
 		self.create(path)
-		self.window.active_view().run_command('open_file_insert',{'path':path,'text':'Hello\n'})
+		self.window.active_view().run_command('open_file_insert',{'path':path,'text':'print ("Hello\\n\")'})
 		view_curr=self.window.active_view()
 		view_curr.run_command('save')
 
@@ -30,7 +30,7 @@ class CheckOutputCommand(sublime_plugin.TextCommand):
 		new_view=self.view.window().new_file()
 		new_view.run_command('goto_line',{'line':1});
 		pos=new_view.sel()[0].begin();
-		new_view.insert(edit,pos,"Your Output:\n\n"+output);
+		new_view.insert(edit,pos,"Your Output:\n\n"+(output.decode('utf-8')));
 		print (output)
 
 class OpenFileInsertCommand(sublime_plugin.TextCommand):
@@ -47,7 +47,7 @@ class OpenFileInsertCommand(sublime_plugin.TextCommand):
         if not view.is_loading():
             view.run_command('insert_text',{'pos':0,'text':text})
         else:
-            sublime.set_timeout(lambda: self.insert_text(view,edit), 10)
+            sublime.set_timeout(lambda: self.select_text(view,edit), 10)
 
 class InsertTextCommand(sublime_plugin.TextCommand):
 	def run(self,edit,pos,text):
