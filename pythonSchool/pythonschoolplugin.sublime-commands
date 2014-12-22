@@ -3,4 +3,9 @@
 		"caption" : "Python School : 1",
 		"command" : "python_school"
 	}
+	,
+	{
+		"caption" : "Python School : Verify",
+		"command" : "check_output"
+	}
 ]
