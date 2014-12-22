@@ -1,10 +1,12 @@
-import sublime, sublime_plugin ,os ,subprocess ,re
+import sublime, sublime_plugin ,os ,subprocess ,re ,sys ,StringIO
 from time import sleep
 class PythonSchoolCommand(sublime_plugin.WindowCommand):
 	def run(self):
-		path=sublime.packages_path()+"datapythonschool/1.py"
+		path=sublime.packages_path()+"/PythonSchool/datapythonschool/1.py"
 		self.create(path)
-		self.window.active_view().run_command('open_file_insert',{'path':path,'text':'print ("Hello\\n\")'})
+		view_curr=self.window.open_file(path)
+		view_curr.run_command('erase_all');
+		view_curr.run_command('insert_text',{'pos':0,'text':"# Write a program to print Hello to stdout\n"})
 		view_curr=self.window.active_view()
 		view_curr.run_command('save')
 
@@ -23,32 +25,33 @@ class PythonSchoolCommand(sublime_plugin.WindowCommand):
 				print ('Error while opening file');
 
 class CheckOutputCommand(sublime_plugin.TextCommand):
+	
+
+	def getnum(self,filepath):
+		name=os.path.basename(filepath)
+		n=int(name.split('.py')[0])
+		return n
+
 	def run(self,edit):
 		fname=self.view.file_name();
+		n=self.getnum(fname)
 		proc = subprocess.Popen(['python', fname], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 		output= proc.communicate()[0]
-		new_view=self.view.window().new_file()
-		new_view.run_command('goto_line',{'line':1});
-		pos=new_view.sel()[0].begin();
-		new_view.insert(edit,pos,"Your Output:\n\n"+(output.decode('utf-8')));
+		solnfname=os.path.dirname(fname)+"/"+str(n)+"soln.py"
+		proc2 = subprocess.Popen(['python',solnfname ], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+		output2= proc2.communicate()[0]
+		solnfile=open(solnfname,'r')
+		view=self.view
+		view.run_command('move_to',{'to':'eof'})
+		view.insert(edit,view.sel()[0].begin(),"\n#----\tYour Output:\t---#\n\n"+(output.decode('utf-8'))+"\n\n#----\tYour Output End\t---#\n");
+		view.insert(edit,view.sel()[0].begin(),"\n#----\tExpected Output:\t---#\n\n"+(output2.decode('utf-8'))+"\n\n#----\tExpected Output End\t---#\n");
+		view.insert(edit,view.sel()[0].begin(),"\n#----\tModel Solution:\t---#\n\n"+solnfile.read()+"\n\n#----\tModel Solution End\t---#\n");
 		print (output)
-
-class OpenFileInsertCommand(sublime_plugin.TextCommand):
-    def run(self,edit,path,text):
-        window = self.view.window()
-        if(os.path.exists(path)):
-        	view = window.open_file(path)
-        else :
-        	print('Creating ...')
-        	view = window.open_file(path)
-        sublime.set_timeout(lambda: self.select_text(view,edit,text), 10)
-
-    def select_text(self, view,edit,text):
-        if not view.is_loading():
-            view.run_command('insert_text',{'pos':0,'text':text})
-        else:
-            sublime.set_timeout(lambda: self.select_text(view,edit), 10)
 
 class InsertTextCommand(sublime_plugin.TextCommand):
 	def run(self,edit,pos,text):
 		self.view.insert(edit,pos,text)
+
+class EraseAllCommand(sublime_plugin.TextCommand):
+	def run(self,edit):
+		self.view.erase(edit,sublime.Region(0,self.view.size()))

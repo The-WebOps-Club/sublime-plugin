@@ -2,7 +2,7 @@ import sublime, sublime_plugin ,os ,subprocess ,re ,sys ,StringIO
 from time import sleep
 class PythonSchoolCommand(sublime_plugin.WindowCommand):
 	def run(self):
-		path=sublime.packages_path()+"datapythonschool/1.py"
+		path=sublime.packages_path()+"/PythonSchool/datapythonschool/1.py"
 		self.create(path)
 		view_curr=self.window.open_file(path)
 		view_curr.run_command('erase_all');
