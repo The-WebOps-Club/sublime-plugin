@@ -37,9 +37,13 @@ class CheckOutputCommand(sublime_plugin.TextCommand):
 		n=self.getnum(fname)
 		proc = subprocess.Popen(['python', fname], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 		output= proc.communicate()[0]
+		if(proc.returncode==None):
+			proc.terminate()
 		solnfname=os.path.dirname(fname)+"/"+str(n)+"soln.py"
 		proc2 = subprocess.Popen(['python',solnfname ], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 		output2= proc2.communicate()[0]
+		if(proc2.returncode==None):
+			proc2.terminate()
 		solnfile=open(solnfname,'r')
 		view=self.view
 		view.run_command('move_to',{'to':'eof'})
