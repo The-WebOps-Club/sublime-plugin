@@ -1,0 +1,12 @@
+[
+	{
+		"caption" : "Python School : 1",
+		"command" : "python_school",
+		"args": {"num": "1.py"}
+	}
+	,
+	{
+		"caption" : "Python School : Verify",
+		"command" : "check_output"
+	}
+]
