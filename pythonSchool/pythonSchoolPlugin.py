@@ -1,4 +1,4 @@
-import sublime, sublime_plugin ,os ,subprocess ,re ,sys ,StringIO
+import sublime, sublime_plugin ,os ,subprocess ,re ,sys ,io
 from time import sleep
 class PythonSchoolCommand(sublime_plugin.WindowCommand):
 	def run(self):
