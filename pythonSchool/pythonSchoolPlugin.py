@@ -1,13 +1,13 @@
 import sublime, sublime_plugin ,os ,subprocess ,re ,sys ,io
 from time import sleep
-class PythonSchoolCommand(sublime_plugin.WindowCommand):
-	def run(self):
-		path=sublime.packages_path()+"/PythonSchool/datapythonschool/1.py"
+class PythonSchoolCommand(sublime_plugin.TextCommand):
+	def run(self,edit,num):
+		#print(num)
+		path=sublime.packages_path()+"/PythonSchool/datapythonschool/"+num
 		self.create(path)
-		view_curr=self.window.open_file(path)
+		view_curr=self.view.window().open_file(path)
 		view_curr.run_command('erase_all');
 		view_curr.run_command('insert_text',{'pos':0,'text':"# Write a program to print Hello to stdout\n"})
-		view_curr=self.window.active_view()
 		view_curr.run_command('save')
 
 	def create(self, filename):
