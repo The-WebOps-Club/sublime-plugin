@@ -3,13 +3,15 @@ from time import sleep
 class PythonSchoolCommand(sublime_plugin.TextCommand):
 	def run(self,edit,num):
 		#print(num)
-		path=sublime.packages_path()+"/PythonSchool/datapythonschool/"+num
+		path=sublime.packages_path()+"/PythonSchool/datapythonschool/"+num+".py"
+		prob=sublime.packages_path()+"/PythonSchool/datapythonschool/"+num+"prob";
+		probfile=open(prob);
 		self.create(path)
 		view_curr=self.view.window().open_file(path)
 		if(view_curr.is_loading()):
 			sublime.set_timeout(lambda:self.run(edit,num),10)
 		view_curr.run_command('erase_all');
-		view_curr.run_command('insert_text',{'pos':0,'text':"# Write a program to print Hello to stdout\n"})
+		view_curr.run_command('insert_text',{'pos':0,'text':probfile.read()})
 		view_curr.run_command('save')
 
 	def create(self, filename):
@@ -49,9 +51,19 @@ class CheckOutputCommand(sublime_plugin.TextCommand):
 		solnfile=open(solnfname,'r')
 		view=self.view
 		view.run_command('move_to',{'to':'eof'})
+		status=-1
+		if(output.decode("utf-8")==output2.decode("utf-8")):
+			status=1
+		else :
+			status=0
+		if(status==1) :
+			view.insert(edit,view.sel()[0].begin(),"\n\n#\tCorrect!\n");
+		else :
+			view.insert(edit,view.sel()[0].begin(),"\n\n#\tTry Again\n");
 		view.insert(edit,view.sel()[0].begin(),"\n#----\tYour Output:\t---#\n\n"+(output.decode('utf-8'))+"\n\n#----\tYour Output End\t---#\n");
 		view.insert(edit,view.sel()[0].begin(),"\n#----\tExpected Output:\t---#\n\n"+(output2.decode('utf-8'))+"\n\n#----\tExpected Output End\t---#\n");
-		view.insert(edit,view.sel()[0].begin(),"\n#----\tModel Solution:\t---#\n\n"+solnfile.read()+"\n\n#----\tModel Solution End\t---#\n");
+		if(status == 1) :
+			view.insert(edit,view.sel()[0].begin(),"\n#----\tModel Solution:\t---#\n\n"+solnfile.read()+"\n\n#----\tModel Solution End\t---#\n");
 		print (output)
 
 class InsertTextCommand(sublime_plugin.TextCommand):

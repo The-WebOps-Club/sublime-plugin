@@ -2,7 +2,13 @@
 	{
 		"caption" : "Python School : 1",
 		"command" : "python_school",
-		"args": {"num": "1.py"}
+		"args": {"num": "1"}
+	}
+	,
+	{
+		"caption" : "Python School : 2",
+		"command" : "python_school",
+		"args": {"num": "2"}
 	}
 	,
 	{
