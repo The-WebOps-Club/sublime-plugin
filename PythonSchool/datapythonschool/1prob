@@ -1,3 +1,7 @@
+# Lines like these starting with a # are called comments and are ignored by 
+# interpreter (the program which runs your python code). These are useful
+# to programmers to make notes and such
+
 # The print() command is used to print to output
 # Write a program to print Hello to stdout
 # Remember that Hello is a string (sequence of characters) and has to 

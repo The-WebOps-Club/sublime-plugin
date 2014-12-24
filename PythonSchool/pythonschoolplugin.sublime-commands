@@ -12,6 +12,12 @@
 	}
 	,
 	{
+		"caption" : "Python School : 3",
+		"command" : "python_school",
+		"args": {"num": "3"}
+	}
+	,
+	{
 		"caption" : "Python School : Verify",
 		"command" : "check_output"
 	}
