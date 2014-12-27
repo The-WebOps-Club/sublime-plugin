@@ -24,7 +24,7 @@
 
 #ask the user to enter his name
 #if no of letters in the name is greater than 7
-#print Your name is way too lengthy
+#print Hey User_name Your name is way too lengthy
 #if it is less than 7 print
-#your name if way too small
-#otherwise print your name is perfect
+#Hey user_name your name if way too small
+#otherwise print Hey user_name your name is perfect
