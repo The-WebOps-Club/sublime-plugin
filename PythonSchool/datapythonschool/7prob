@@ -1,0 +1,26 @@
+#There is another datatype called Lists
+#which pretty much what the same as the name suggest
+#we can create a list containing data 
+#of diff. data types like strings,integer 
+#under a same variable name
+#A list contains items separated by commas 
+#and enclosed within square brackets ([])
+
+#Every list items are numbered/indexed from o to items-1
+#and we can access a list item by
+#list_name[index]
+#u can add/replace any item by
+#similar to assigning item to list_name[index]
+
+#Also there is a similar kind of datatype
+#called Tuples which is same as lists
+#but enclosed within parentheses()
+#which can't be updated unlike the lists
+
+#create a list named grocery
+#add some 5 items
+#create another list named extra
+#add 3 items to it
+#print the 3rd ite mof grocery
+#print the 1st item of extra
+#try to add the 2 list and see what happens
