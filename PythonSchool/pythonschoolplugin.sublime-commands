@@ -18,6 +18,60 @@
 	}
 	,
 	{
+		"caption" : "Python School : 4",
+		"command" : "python_school",
+		"args" : {"num" : "4"}
+	}
+	,
+	{
+		"caption" : "Python School : 5",
+		"command" : "python_school",
+		"args" : {"num" : "5"}
+	}
+	,
+	{
+		"caption" : "Python School : 6",
+		"command" : "python_school",
+		"args" : {"num" : "6"}
+	}
+	,
+	{
+		"caption" : "Python School : 7",
+		"command" : "python_school",
+		"args" : {"num" : "7"}
+	}
+	,
+	{
+		"caption" : "Python School : 8",
+		"command" : "python_school",
+		"args" : {"num" : "8"}
+	}
+	,
+	{
+		"caption" : "Python School : 9",
+		"command" : "python_school",
+		"args" : {"num" : "9"}
+	}
+	,
+	{
+		"caption" : "Python School : 10",
+		"command" : "python_school",
+		"args" : {"num" : "10"}
+	}
+	,
+	{
+		"caption" : "Python School : 11",
+		"command" : "python_school",
+		"args" : {"num" : "11"}
+	}
+	,
+	{
+		"caption" : "Python School : 12",
+		"command" : "python_school",
+		"args" : {"num" : "12"}
+	}
+	,
+	{
 		"caption" : "Python School : Verify",
 		"command" : "check_output"
 	}
