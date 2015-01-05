@@ -41,14 +41,17 @@ class CheckOutputCommand(sublime_plugin.TextCommand):
 		n=self.getnum(fname)
 		inputfname=os.path.dirname(fname)+"/"+str(n)+"input"
 		inputfile=open(inputfname,'r')
-		input=inputfile.read()
+		inputtext=inputfile.read()
+		inputbytes=inputtext.encode("utf8","replace")
+		print(inputbytes)
 		proc = subprocess.Popen(['python', fname], stdout=subprocess.PIPE,stdin=subprocess.PIPE, stderr=subprocess.STDOUT)
-		output= proc.communicate(input=input)[0]
+		output= proc.communicate(input=inputbytes)[0]
 		if(proc.returncode==None):
 			proc.terminate()
 		solnfname=os.path.dirname(fname)+"/"+str(n)+"soln.py"
 		proc2 = subprocess.Popen(['python',solnfname ], stdout=subprocess.PIPE,stdin=subprocess.PIPE,stderr=subprocess.STDOUT)
-		output2= proc2.communicate(input=input)[0]
+		output2= proc2.communicate(input=inputbytes)[0]
+		
 		if(proc2.returncode==None):
 			proc2.terminate()
 		solnfile=open(solnfname,'r')
@@ -63,13 +66,12 @@ class CheckOutputCommand(sublime_plugin.TextCommand):
 			view.insert(edit,view.sel()[0].begin(),"\n\n#\tCorrect!\n");
 		else :
 			view.insert(edit,view.sel()[0].begin(),"\n\n#\tTry Again\n");
-		if(input!=""):
-			view.insert(edit,view.sel()[0].begin(),"\n#----\tInput:\t---#\n\n"+(input)+"\n\n#----\tInput End\t---#\n");
+		if(inputtext!=""):
+			view.insert(edit,view.sel()[0].begin(),"\n#----\tInput:\t---#\n\n"+inputtext+"\n\n#----\tInput End\t---#\n");
 		view.insert(edit,view.sel()[0].begin(),"\n#----\tYour Output:\t---#\n\n"+(output.decode('utf-8'))+"\n\n#----\tYour Output End\t---#\n");
 		view.insert(edit,view.sel()[0].begin(),"\n#----\tExpected Output:\t---#\n\n"+(output2.decode('utf-8'))+"\n\n#----\tExpected Output End\t---#\n");
 		if(status == 1) :
 			view.insert(edit,view.sel()[0].begin(),"\n#----\tModel Solution:\t---#\n\n"+solnfile.read()+"\n\n#----\tModel Solution End\t---#\n");
-		print (output)
 
 class InsertTextCommand(sublime_plugin.TextCommand):
 	def run(self,edit,pos,text):
