@@ -1,8 +1,7 @@
-#### OUTPUT START ####
 import math
-a =int(raw_input("enter the 1st number: "))
-b = int(raw_input("enter the 2nd number: "))
-c = int(raw_input("enter the 3rd number: "))
+a =int(raw_input())
+b = int(raw_input())
+c = int(raw_input())
 m = max(a,b,c)
 print ('the maximum value of the 3 is %d and square root of the max. is %f') % (m,math.sqrt(m))
 
@@ -16,4 +15,4 @@ def max(x,y,z):
 		max = z
 	return max 
 
-#### OUTPUT END ####
+

@@ -2,5 +2,3 @@
 # Write a program to print Hello to stdout
 # Remember that Hello is a string (sequence of characters) and has to 
 # enclosed within single (') or double (") quotes
-
-print('Hello');

@@ -12,5 +12,3 @@
 # Your task is to set a variable v to 2.5 and print its type.Also print its 
 # square.Create another variable animal equal to the string Python and find 
 # what animal*3 does and print it.
-
-print "foofoofoo"

@@ -1,5 +1,4 @@
-#### RECOMMENDED ANSWER ####
-n = raw_input("Enter the number n: ")
+n = raw_input()
 a,b=0,1
 while 1:
     a,b=b,a+b

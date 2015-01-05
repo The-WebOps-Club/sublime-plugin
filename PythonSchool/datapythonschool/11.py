@@ -39,3 +39,4 @@
 #including some vegetables as 'banana','apple','tomato','potato','orange','grapes'
 #and print the items as said above
 #except the last line
+

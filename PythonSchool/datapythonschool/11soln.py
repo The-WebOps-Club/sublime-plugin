@@ -1,4 +1,3 @@
-#### RECOMMENDED ANSWER ####
 fruits = ['banana', 'apple', 'orange', 'grape']
 for f in fruits:
 	print('you have a %s') % (f)

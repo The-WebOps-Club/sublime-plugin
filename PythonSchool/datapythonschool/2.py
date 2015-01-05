@@ -8,5 +8,3 @@
 
 # Your task is to find the product of 23 and 56 and print it , followed by 
 # another line with value of 2 raise to power 3 squared
-print(1288)
-print(512)
